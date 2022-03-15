@@ -1,0 +1,23 @@
+      #Copy this code and convert them, so they go to your "Imports" section
+      
+var vizL8 = {"opacity":1,"bands":["B4","B3","B2"],"min":0.051753390580415726,"max":0.29282376170158386,"gamma":1},
+vizNDVI = {"opacity":1,"bands":["nd"],"palette":["640000","ff0000","ffff00","00c800","006400"]},
+geometry = /* color: #ffffff */ee.Geometry.Point([-103.58225273206425, 20.663516698359896]),
+NDVIpallete = {"opacity":1,"bands":["nd"],"palette":["640000","ff0000","ffa500","ffff00","005e00"]},
+imageVisParam = {"opacity":1,"bands":["B4","B3","B2"],"min":0.055417727679014206,"max":0.26462990045547485,"gamma":1},
+l8 = ee.ImageCollection("LANDSAT/LC08/C01/T1_TOA"),
+vizL82 = {"opacity":1,"bands":["B4","B3","B2"],"min":0.055417727679014206,"max":0.26462990045547485,"gamma":1}
+
+      #Add code
+var imagen = l8.filterBounds(geometry)
+        .filterDate('2015-04-10','2018-05-31')
+        .filterMetadata('CLOUD_COVER', 'less_than', 20)
+        .first();
+              
+var vizL8 = vizL82;
+var ndvi = imagen.normalizedDifference(['B5', 'B4']);
+
+
+Map.addLayer(imagen,vizL8,'Landsat 8');
+Map.addLayer(ndvi, NDVIpallete, 'NDVI');
+Map.centerObject(imagen,10)
